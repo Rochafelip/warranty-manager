@@ -1,6 +1,7 @@
 class WarrantiesController < ApplicationController
   def index
-    @warranties = policy_scope(Warranty)
+    @q = policy_scope(Warranty).ransack(params[:q])
+    @warranties = @q.result
 
     render json: @warranties.map { |warranty| WarrantySerializer.call(warranty) }
   end

@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   def index
-    @invoices = policy_scope(Invoice)
+    @q = policy_scope(Invoice).ransack(params[:q])
+    @invoices = @q.result
 
     render json: @invoices.map { |invoice| InvoiceSerializer.call(invoice) }
   end
