@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
   before do
-    @user = User.create(name: 'Orelha', email: 'orelha@example.com', password: 'password', confirmed_at: Time.current)
-    
+    @user = User.create(name: 'Orelha', email: 'orelha@example.com', password: 'password')
+
     @invoice = Invoice.new(
       invoice_number: 'INV12345',
       purchase_date: Date.today - 1.days,
       issue_date: Date.today,
       user: @user
     )
-    
+
     pdf_path = Rails.root.join('lib', 'assets', 'invoice.pdf')
     @invoice.pdf.attach(io: File.open(pdf_path), filename: 'invoice.pdf', content_type: 'application/pdf')
   end
@@ -47,13 +47,13 @@ RSpec.describe Invoice, type: :model do
     it 'is invalid without an associated user' do
       invoice.user = nil
       expect(invoice).not_to be_valid
-      expect(invoice.errors[:user]).to include("must exist")
+      expect(invoice.errors[:user]).to include('must exist')
     end
 
     it 'is invalid if the invoice number is not alphanumeric' do
       invoice.invoice_number = '12345!'
       expect(invoice).not_to be_valid
-      expect(invoice.errors[:invoice_number]).to include("deve conter apenas letras e números!")
+      expect(invoice.errors[:invoice_number]).to include('deve conter apenas letras e números!')
     end
   end
 
@@ -74,7 +74,8 @@ RSpec.describe Invoice, type: :model do
     let(:invoice) { Invoice.first }
 
     it 'allows attaching a PDF' do
-      invoice.pdf.attach(io: File.open(Rails.root.join('lib', 'assets', 'invoice.pdf')), filename: 'invoice.pdf', content_type: 'application/pdf')
+      invoice.pdf.attach(io: File.open(Rails.root.join('lib', 'assets', 'invoice.pdf')), filename: 'invoice.pdf',
+                         content_type: 'application/pdf')
       expect(invoice.pdf).to be_attached
     end
 

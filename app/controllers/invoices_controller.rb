@@ -28,6 +28,19 @@ class InvoicesController < ApplicationController
 
   def destroy
     authorize invoice
+
+    invoice.products.each do |product|
+      ProductHistory.create!(
+        name: product.name,
+        description: product.description,
+        category: product.category,
+        price: product.price,
+        serial_number: product.serial_number,
+        warranty_expiry_date: product.warranty_expiry_date,
+        user: product.invoice.user
+      )
+    end
+
     invoice.destroy
 
     head :no_content

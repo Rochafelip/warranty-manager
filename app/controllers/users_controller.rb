@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create]
+
   def index
     authorize User
     @q = policy_scope(User).ransack(params[:q])
@@ -14,8 +16,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    authorize user
     @user = User.create!(permitted_attributes(User))
+    @user.confirm_success_url = "http://example.com/success" # Defina um URL fictício ou válido
+
+    authorize user
 
     render json: UserSerializer.call(user), status: :created
   end
