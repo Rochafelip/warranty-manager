@@ -20,7 +20,7 @@ class StorePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :contact, address]
+    [:name, :contact, :address]
   end
 
   class Scope < Scope

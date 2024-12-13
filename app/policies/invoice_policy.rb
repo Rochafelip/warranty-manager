@@ -12,7 +12,7 @@ class InvoicePolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || (user.role == 'user' && record.user_id == user.id)
+    user.admin? || record.user_id == user.id
   end
 
   def destroy?

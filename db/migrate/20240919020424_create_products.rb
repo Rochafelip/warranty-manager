@@ -9,7 +9,7 @@ class CreateProducts < ActiveRecord::Migration[7.0]
       t.date :warranty_expiry_date, null:false
       t.integer :invoice_id, null:false
       t.integer :store_id, null:false
-       
+
       t.timestamps
     end
   end

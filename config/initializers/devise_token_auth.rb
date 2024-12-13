@@ -36,6 +36,8 @@ DeviseTokenAuth.setup do |config|
   # attribute updates. Set it to :password if you want it to be checked only if
   # password is updated.
   config.check_current_password_before_update = :attributes
+  config.token_lifespan = 2.weeks
+  config.batch_request_buffer_throttle = 5.seconds
 
   # By default we will use callbacks for single omniauth.
   # It depends on fields like email, provider and uid.
