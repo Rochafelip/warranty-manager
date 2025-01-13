@@ -4,7 +4,7 @@ class ProductPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin? || user_has_access_to_products?
+    user.admin? || user.invoices.exists?
   end
 
   def create?
