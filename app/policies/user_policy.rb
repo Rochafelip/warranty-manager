@@ -1,10 +1,10 @@
 class UserPolicy < ApplicationPolicy
   def index?
-    user.admin?
+    user&.admin? # Verifica se user existe antes de chamar admin?
   end
 
   def show?
-    user.admin? || user.id == record.id
+    user&.admin? || user&.id == record.id
   end
 
   def create?
@@ -12,11 +12,11 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    user.admin? || (user.role == 'user' && user.id == record.id)
+    user&.admin? || (user&.role == 'user' && user&.id == record.id)
   end
 
   def destroy?
-    user.admin?
+    user&.admin?
   end
 
   def permitted_attributes
@@ -25,11 +25,8 @@ class UserPolicy < ApplicationPolicy
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.where(user_id: user.id)
-      end
+      return scope.none unless user # Se user for nil, retorna vazio
+      user.admin? ? scope.all : scope.where(id: user.id)
     end
   end
 end

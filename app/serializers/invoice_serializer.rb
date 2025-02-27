@@ -1,6 +1,6 @@
 class InvoiceSerializer < ApplicationSerializer
   def self.call(invoice)
-    return { error: 'Invoice not found' } if invoice.nil?
+    return { error: I18n.t('errors.invoice.not_found') } if invoice.pdf.nil?
 
     {
       id: invoice.id,
@@ -15,7 +15,7 @@ class InvoiceSerializer < ApplicationSerializer
   private
 
   def self.pdf_url(invoice)
-    return nil unless invoice.pdf.attached?
+    return I18n.t('errors.invoice.pdf_not_attached') unless invoice.respond_to?(:pdf) && invoice.pdf.attached?
 
     Rails.application.routes.url_helpers.rails_blob_url(invoice.pdf, host: 'localhost:4000')
   end

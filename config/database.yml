@@ -6,7 +6,7 @@ default: &default
   username: <%= ENV.fetch("DB_USERNAME") { 'postgres' } %>
   password: <%= ENV.fetch("DB_PASSWORD") { 'postgres' } %>
   host: <%= ENV.fetch("DB_HOST") { 'localhost' } %>
-  port: <%= ENV.fetch("DB_PORT") { 5432 } %>
+  port: <%= ENV.fetch("DB_PORT") { 5434 } %>  # Porta corrigida
 
 development:
   <<: *default
@@ -18,7 +18,6 @@ test:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %> 
-  password: <%= ENV.fetch("DB_PASSWORD")
   database: dbwarranty
   username: dbwarranty_user
+  password: <%= ENV.fetch("DB_PASSWORD", "sua_senha") %>

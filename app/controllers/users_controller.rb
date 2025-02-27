@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!
 
   def index
     authorize User
@@ -7,6 +8,8 @@ class UsersController < ApplicationController
     @users = @q.result
 
     render json: @users.map { |user| UserSerializer.call(user) }
+  rescue Pundit::NotAuthorizedError
+    render json: { error: I18n.t('errors.user_policy.index?') }, status: :forbidden
   end
 
   def show
@@ -17,7 +20,6 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create!(permitted_attributes(User))
-    @user.confirm_success_url = "http://example.com/success" # Defina um URL fictício ou válido
 
     authorize user
 

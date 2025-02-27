@@ -14,9 +14,13 @@ class InvoicesController < ApplicationController
 
   def create
     authorize Invoice
-    @invoice = current_user.invoices.create(invoice_params)
+    @invoice = current_user.invoices.new(invoice_params)
 
-    render json: InvoiceSerializer.call(@invoice), status: :created
+    if @invoice.save
+      render json: InvoiceSerializer.call(@invoice), status: :created
+    else
+      render json: { errors: @invoice.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def update

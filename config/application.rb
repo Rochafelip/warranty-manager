@@ -1,5 +1,4 @@
 require_relative 'boot'
-
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,6 +14,7 @@ module WarrantyManager
 
     config.api_only = true
     config.middleware.use ActionDispatch::Session::CookieStore, key: '_warranty_manager_session'
+
     #ActiveJob
     config.active_job.queue_adapter = :sidekiq
 
