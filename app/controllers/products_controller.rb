@@ -1,5 +1,8 @@
 class ProductsController < ApplicationController
+  before_action :set_product, only: %i[show update destroy]
+
   def index
+    authorize Product
     @q = policy_scope(Product).ransack(params[:q])
     @products = @q.result
 
@@ -7,13 +10,12 @@ class ProductsController < ApplicationController
   end
 
   def show
-    authorize product
-
-    render json: ProductSerializer.call(product)
+    authorize @product
+    render json: ProductSerializer.call(@product)
   end
 
   def create
-    @product = Product.new(permitted_attributes(Product.new))
+    @product = Product.new(permitted_attributes(Product))
     authorize @product
 
     @product.save!
@@ -21,24 +23,21 @@ class ProductsController < ApplicationController
   end
 
   def update
-    authorize product
-
-    attributes = permitted_attributes(product).except(:invoice_id)
-
-    product.update!(attributes)
-    render json: ProductSerializer.call(product), status: :ok
+    authorize @product
+    @product.update!(permitted_attributes(@product))
+    render json: ProductSerializer.call(@product), status: :ok
   end
 
   def destroy
-    authorize product
+    authorize @product
+    @product.destroy
 
-    product.destroy
     head :no_content
   end
 
   private
 
-  def product
-    @product ||= Product.find(params[:id])
+  def set_product
+    @product = Product.find(params[:id])
   end
 end

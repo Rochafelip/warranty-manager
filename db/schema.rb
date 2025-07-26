@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_05_223007) do
+ActiveRecord::Schema[7.0].define(version: 2025_07_26_170559) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,19 +50,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_05_223007) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_invoices_on_user_id"
-  end
-
-  create_table "product_histories", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "category"
-    t.decimal "price"
-    t.string "serial_number"
-    t.date "warranty_expiry_date"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_product_histories_on_user_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -125,7 +112,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_05_223007) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "invoices", "users"
-  add_foreign_key "product_histories", "users"
   add_foreign_key "products", "invoices"
   add_foreign_key "warranties", "products"
 end

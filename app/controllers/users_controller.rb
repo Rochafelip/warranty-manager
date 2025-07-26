@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
-
   def index
     authorize User
-    @q = policy_scope(User).ransack(params[:q])
+    @q = policy_scope(User).ransack(params[:q]) # Adicionando Ransack
     @users = @q.result
 
     render json: @users.map { |user| UserSerializer.call(user) }
@@ -11,30 +9,23 @@ class UsersController < ApplicationController
 
   def show
     authorize user
-
     render json: UserSerializer.call(user)
   end
 
   def create
     @user = User.create!(permitted_attributes(User))
-    @user.confirm_success_url = "http://example.com/success" # Defina um URL fictício ou válido
-
-    authorize user
-
-    render json: UserSerializer.call(user), status: :created
+    render json: UserSerializer.call(@user), status: :created
   end
 
   def update
     authorize user
     user.update!(permitted_attributes(User))
-
     render json: UserSerializer.call(user), status: :ok
   end
 
   def destroy
     authorize user
     user.destroy
-
     head :no_content
   end
 

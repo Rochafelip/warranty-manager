@@ -17,6 +17,6 @@ class InvoiceSerializer < ApplicationSerializer
   def self.pdf_url(invoice)
     return nil unless invoice.pdf.attached?
 
-    Rails.application.routes.url_helpers.rails_blob_url(invoice.pdf, host: 'localhost:4000')
+    Rails.application.routes.url_helpers.rails_blob_url(invoice.pdf, host: 'localhost:3000')
   end
 end

@@ -1,14 +1,25 @@
 class ProductPolicy < ApplicationPolicy
+  class Scope < Scope
+    def resolve
+      if user.admin?
+        scope.all
+      else
+        # Usuário comum acessa produtos relacionados aos seus invoices
+        scope.joins(:invoice).where(invoices: { user_id: user.id })
+      end
+    end
+  end
+
   def show?
     user.admin? || user.invoices.exists?(id: record.invoice_id)
   end
 
   def index?
-    user.admin? || user.invoices.exists?
+    true # O acesso é controlado pelo policy_scope
   end
 
   def create?
-    user.admin? || user.invoices.exists?(id: record.invoice_id)
+    user.admin? || (record.invoice_id.present? && user.invoices.exists?(id: record.invoice_id))
   end
 
   def update?
@@ -21,16 +32,6 @@ class ProductPolicy < ApplicationPolicy
 
   def permitted_attributes
     [:name, :description, :category, :price, :serial_number, :warranty_expiry_date, :store_id, :invoice_id]
-  end
-
-  class Scope < Scope
-    def resolve
-      if user.admin?
-        scope.all
-      else
-        scope.joins(:invoice).where(invoices: { user_id: user.id })
-      end
-    end
   end
 
   private

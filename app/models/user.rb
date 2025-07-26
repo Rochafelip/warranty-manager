@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   has_many :invoices
-  has_many :product_histories, dependent: :destroy
 
   devise :database_authenticatable, :registerable, :recoverable,
          :rememberable, :validatable, :lockable
