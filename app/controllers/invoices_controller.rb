@@ -1,4 +1,7 @@
 class InvoicesController < ApplicationController
+  include DeviseTokenAuth::Concerns::SetUserByToken
+  before_action :authenticate_user!
+
   def index
     authorize Invoice
     @q = policy_scope(Invoice).ransack(params[:q]) # Integração com Ransack
