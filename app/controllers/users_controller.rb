@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    authorize User
     @user = User.create!(permitted_attributes(User))
     render json: UserSerializer.call(@user), status: :created
   end
