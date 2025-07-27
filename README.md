@@ -11,22 +11,23 @@ Este é o frontend da aplicação de gestão de notas fiscais, construído com V
 
 ## ▶️ Como rodar o projeto
 
-1. Instale as dependências:
+### 1. Instale as dependências:
 
 npm install
-# ou
+ou
 yarn install
 
-2. Inicie o servidor local:
+### 2. Inicie o servidor local:
+   
 npm run dev
-# ou
+ou
 yarn dev
 
-3. Acesse no navegador:
+### 3. Acesse no navegador:
 
 http://localhost:5173
 
-🔐 Usuários para testes
+### 🔐 Usuários para testes
 Você pode utilizar os seguintes usuários para testar os diferentes níveis de acesso no sistema:
 
 👑 Administrador
@@ -35,6 +36,7 @@ Você pode utilizar os seguintes usuários para testar os diferentes níveis de 
   "email": "jalexandre@example.com",
   "password": "password"
 }
+
 👤 Usuário comum
 
 {
