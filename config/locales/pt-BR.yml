@@ -1,5 +1,4 @@
 pt-BR:
-
   default_messages:
     deleted: "%{model} excluido(a)."
 
@@ -22,20 +21,20 @@ pt-BR:
 
   seed:
     users:
-      success: "Usuário com e-mail '%{email}' criado com sucesso!"
-      already_exists: "Usuário com e-mail '%{email}' já existe."
+      success: "Usuário com email '%{email}' criado com sucesso!"
+      error: "Erro ao criar usuário: %{message}"
     invoices:
-      success: "Invoice '%{invoice_number}' criada com sucesso!"
-      already_exists: "Invoice '%{invoice_number}' já existe."
-      error: "Erro ao criar invoice: %{message}."
+      success: "Nota fiscal %{invoice_number} do usuário %{user_id} criada com sucesso!"
+      error: "Erro ao criar nota fiscal: %{message}"
+      already_exists: "Nota fiscal %{invoice_number} já existe!"
     stores:
-      success: "Loja '%{name}' criada com sucesso!"
-      already_exists: "A loja '%{name}' já existe."
-      error: "Erro ao criar a loja: %{message}."
+      success: "Loja %{name} criada com sucesso!"
+      error: "Erro ao criar loja: %{message}"
+      already_exists: "Loja %{name} já existe!"
     products:
-      success: "Produto com número de série %{serial_number} foi criado com sucesso."
-      already_exists: "Produto com número de série %{serial_number} já existe."
+      success: "Produto com número serial %{serial_number} criado com sucesso!"
       error: "Erro ao criar produto: %{message}"
+      already_exists: "Produto com número serial %{serial_number} já existe!"
     warranties:
       success: "Garantia com número %{warranty_number} foi criada com sucesso."
       already_exists: "Garantia com número %{warranty_number} já existe."

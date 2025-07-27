@@ -1,7 +1,7 @@
 puts 'Seeding Products...'
 
-stores = Store.all
-invoices = Invoice.all
+stores = Store.all.to_a
+invoices = Invoice.all.to_a
 
 products_data = (1..100).map do |i|
   category = case i % 6
@@ -20,27 +20,28 @@ products_data = (1..100).map do |i|
                     end
 
   invoice = invoices.sample
+  store = stores.sample
+
   {
-    name: "Produto #{i}",
+    name: "Produto #{i}".slice(0, 45),  # garante máximo 45 caracteres
     description: "Descrição do produto #{i}",
-    category:,
-    price: rand(10..1000).to_f,
+    category: category,
+    price: rand(100..10000).to_f.round(2),
     serial_number: "#{i.to_s.rjust(15, '0')}",
     warranty_expiry_date: invoice.issue_date + warranty_period.months,
-    store: stores.sample,
-    invoice:
+    invoice_id: invoice.id,
+    store_id: store.id
   }
 end
 
 products_data.each do |product_data|
-  if Product.exists?(serial_number: product_data[:serial_number])
-    puts I18n.t('seed.products.already_exists', serial_number: product_data[:serial_number])
+  next if Product.exists?(serial_number: product_data[:serial_number])
+
+  product = Product.new(product_data)
+
+  if product.save
+    puts "✅ Produto criado: #{product.serial_number} (#{product.name})"
   else
-    product = Product.new(product_data)
-    if product.save
-      puts I18n.t('seed.products.success', serial_number: product.serial_number)
-    else
-      puts I18n.t('seed.products.error', message: product.errors.full_messages.join(', '))
-    end
+    puts "❌ Erro ao criar produto #{product.serial_number}: #{product.errors.full_messages.join(', ')}"
   end
 end

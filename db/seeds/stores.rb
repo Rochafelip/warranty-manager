@@ -9,19 +9,13 @@ stores_data = [
 ]
 
 stores_data.each do |store_data|
-  if Store.exists?(name: store_data[:name])
-    puts I18n.t('seed.stores.already_exists', name: store_data[:name])
+  store = Store.find_or_initialize_by(name: store_data[:name])
+  store.assign_attributes(store_data)
+  if store.save
+    puts "✅ Store criada: #{store.name}"
   else
-    store = Store.new(
-      name: store_data[:name],
-      contact: store_data[:contact],
-      address: store_data[:address]
-    )
-
-    if store.save
-      puts I18n.t('seed.stores.success', name: store.name)
-    else
-      puts I18n.t('seed.stores.error', message: store.errors.full_messages.join(', '))
-    end
+    puts "❌ Erro ao criar store: #{store.errors.full_messages.join(', ')}"
   end
 end
+
+stores = Store.all

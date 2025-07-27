@@ -10,7 +10,7 @@ class InvoicePolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    user.present?
   end
 
   def show?

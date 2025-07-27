@@ -10,7 +10,9 @@ class ProductSerializer < ApplicationSerializer
       price: product.price,
       serial_number: product.serial_number,
       warranty_expiry_date: product.warranty_expiry_date,
-      invoice_id: product.invoice_id
+      invoice_id: product.invoice_id,
+      store_id: product.store_id,
+      store: StoreSerializer.call(product.store)
     }
   end
 end

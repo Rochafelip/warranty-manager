@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   def index
     authorize Product
-    @q = policy_scope(Product).ransack(params[:q])
+    @q = policy_scope(Product).includes(:store).ransack(params[:q])
     @products = @q.result
 
     render json: @products.map { |product| ProductSerializer.call(product) }
@@ -11,6 +11,7 @@ class ProductsController < ApplicationController
 
   def show
     authorize @product
+    @product = Product.includes(:store).find(params[:id])
     render json: ProductSerializer.call(@product)
   end
 

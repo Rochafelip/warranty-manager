@@ -4,7 +4,7 @@ class InvoicesController < ApplicationController
 
   def index
     authorize Invoice
-    @q = policy_scope(Invoice).ransack(params[:q]) # Integração com Ransack
+    @q = policy_scope(Invoice).ransack(params[:q])
     @invoices = @q.result
 
     render json: @invoices.map { |invoice| InvoiceSerializer.call(invoice) }
