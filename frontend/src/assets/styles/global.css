@@ -1,0 +1,29 @@
+/* assets/styles.css */
+
+/* Cor do texto em geral */
+body {
+    font-family: Arial, sans-serif;
+    color: #333; /* Cor padrão do texto */
+  }
+  
+  /* Títulos */
+  h1, h2, h3 {
+    color: #ff6600; /* Cor laranja para os títulos */
+  }
+  
+  /* Cor do texto em botões */
+  button {
+    color: white;
+  }
+  
+  /* Cores específicas para links */
+  a {
+    color: #0066cc;
+  }
+  
+  a:hover {
+    color: #004d99;
+  }
+  
+  /* Adicionar mais estilos conforme necessário */
+  
