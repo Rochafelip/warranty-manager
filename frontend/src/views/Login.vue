@@ -48,10 +48,6 @@ export default {
         sessionStorage.setItem('access-token', accessToken);
         sessionStorage.setItem('client', client);
         sessionStorage.setItem('uid', uid);
-        sessionStorage.setItem('user.name', response.data.data.name);
-
-        console.log('HEADERS DA RESPOSTA:', response.headers);
-        console.log('DATA:', response.data);
 
         this.password = ''; 
 
@@ -65,7 +61,7 @@ export default {
           this.errorMessage = 'Erro ao tentar fazer login. Verifique suas credenciais ou tente novamente.';
         }
       }
-    },
+    }
   },
 };
 </script>
