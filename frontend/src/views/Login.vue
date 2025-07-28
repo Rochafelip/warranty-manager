@@ -28,41 +28,41 @@ export default {
     };
   },
   methods: {
-      async handleLogin() {
-        try {
-          const response = await api.post('/auth/sign_in', {
-            email: this.email,
-            password: this.password,
-          });
+    async handleLogin() {
+      try {
+        const response = await api.post('/auth/sign_in', {
+          email: this.email,
+          password: this.password,
+        });
 
-          const headers = response.headers;
+        const headers = response.headers;
 
-          const accessToken = headers['access-token'];
-          const client = headers['client'];
-          const uid = headers['uid'];
+        const accessToken = headers['access-token'];
+        const client = headers['client'];
+        const uid = headers['uid'];
 
-          if (!accessToken || !client || !uid) {
-            throw new Error('Headers de autenticação ausentes.');
-          }
-
-          sessionStorage.setItem('access-token', accessToken);
-          sessionStorage.setItem('client', client);
-          sessionStorage.setItem('uid', uid);
-          sessionStorage.setItem('user.name', response.data.data.name);
-
-          this.password = ''; // Limpa a senha
-
-          this.$router.push('/dashboard'); // Redireciona após login bem sucedido
-        } catch (error) {
-          console.error('Erro ao realizar login:', error);
-
-          if (error.response?.data?.errors) {
-            this.errorMessage = error.response.data.errors.join(', ');
-          } else {
-            this.errorMessage = 'Erro ao tentar fazer login. Verifique suas credenciais ou tente novamente.';
-          }
+        if (!accessToken || !client || !uid) {
+          throw new Error('Headers de autenticação ausentes.');
         }
-      },
+
+        sessionStorage.setItem('access-token', accessToken);
+        sessionStorage.setItem('client', client);
+        sessionStorage.setItem('uid', uid);
+        sessionStorage.setItem('user.name', response.data.data.name);
+
+        this.password = ''; 
+
+        this.$router.push('/dashboard');
+      } catch (error) {
+        console.error('Erro ao realizar login:', error);
+
+        if (error.response?.data?.errors) {
+          this.errorMessage = error.response.data.errors.join(', ');
+        } else {
+          this.errorMessage = 'Erro ao tentar fazer login. Verifique suas credenciais ou tente novamente.';
+        }
+      }
+    },
   },
 };
 </script>
