@@ -7,10 +7,7 @@ const backendError = ref(false);
 async function checkBackend() {
   try {
     const res = await fetch(import.meta.env.VITE_API_URL + '/auth/sign_in', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      method: 'OPTIONS',
     });
 
     if (res.ok || res.status === 204 || res.status === 401) {
