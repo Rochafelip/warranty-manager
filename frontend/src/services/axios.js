@@ -1,11 +1,9 @@
-// src/services/axios.js
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-// Interceptor para adicionar tokens de autenticação em todas as requisições
 api.interceptors.request.use(config => {
   const accessToken = sessionStorage.getItem('access-token');
   const client = sessionStorage.getItem('client');
@@ -15,12 +13,13 @@ api.interceptors.request.use(config => {
     config.headers['access-token'] = accessToken;
     config.headers['client'] = client;
     config.headers['uid'] = uid;
-    config.headers['token-type'] = 'Bearer'; // geralmente token-type é 'Bearer'
+    config.headers['token-type'] = 'Bearer';
   }
 
   return config;
 }, error => {
   return Promise.reject(error);
 });
+
 
 export default api;
