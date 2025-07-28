@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:4000', // ajuste a URL da sua API
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 // Interceptor para adicionar tokens de autenticação em todas as requisições
