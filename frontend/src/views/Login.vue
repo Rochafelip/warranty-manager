@@ -27,6 +27,7 @@ export default {
       errorMessage: null,
     };
   },
+
   methods: {
     async handleLogin() {
       try {
@@ -41,18 +42,22 @@ export default {
         const client = headers['client'];
         const uid = headers['uid'];
 
-        if (!accessToken || !client || !uid) {
-          throw new Error('Headers de autenticação ausentes.');
-        }
-
         sessionStorage.setItem('access-token', accessToken);
         sessionStorage.setItem('client', client);
         sessionStorage.setItem('uid', uid);
 
+        if (!accessToken || !client || !uid) {
+          throw new Error('Headers de autenticação ausentes.');
+        }
+
+        console.log('Todos os headers:', headers);
+
         this.password = ''; 
 
         this.$router.push('/dashboard');
-      } catch (error) {
+
+      } 
+      catch (error) {
         console.error('Erro ao realizar login:', error);
 
         if (error.response?.data?.errors) {
