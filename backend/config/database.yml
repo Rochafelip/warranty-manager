@@ -9,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DB_DATABASE", "warranty_manager_development") %>
+  database: <%= ENV.fetch("DB_DEVELOPMENT_DATABASE", "warranty_manager_development") %>
 
 test:
   <<: *default
@@ -17,6 +17,6 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV.fetch("DB_DATABASE", "dbwarranty") %>
+  database: <%= ENV.fetch("DB_PRODUCTION_DATABASE", "dbwarranty") %>
   username: <%= ENV.fetch("DB_USERNAME", "dbwarranty_user") %>
   password: <%= ENV.fetch("DB_PASSWORD") %>
