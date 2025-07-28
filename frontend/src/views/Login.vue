@@ -61,7 +61,7 @@ export default {
           this.errorMessage = 'Erro ao tentar fazer login. Verifique suas credenciais ou tente novamente.';
         }
       }
-    }
+    },
   },
 };
 </script>
