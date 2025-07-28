@@ -50,6 +50,9 @@ export default {
         sessionStorage.setItem('uid', uid);
         sessionStorage.setItem('user.name', response.data.data.name);
 
+        console.log('HEADERS DA RESPOSTA:', response.headers);
+        console.log('DATA:', response.data);
+
         this.password = ''; 
 
         this.$router.push('/dashboard');
