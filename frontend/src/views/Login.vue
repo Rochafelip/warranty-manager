@@ -37,6 +37,8 @@ export default {
         });
 
         const headers = response.headers;
+        const user = response.data.data;
+        const userName = user.name;
 
         const accessToken = headers['access-token'];
         const client = headers['client'];
@@ -45,6 +47,7 @@ export default {
         sessionStorage.setItem('access-token', accessToken);
         sessionStorage.setItem('client', client);
         sessionStorage.setItem('uid', uid);
+        sessionStorage.setItem('user-name', userName);
 
         if (!accessToken || !client || !uid) {
           throw new Error('Headers de autenticação ausentes.');
