@@ -43,7 +43,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Estilização básica dentro do App.vue para fallback */
 .loading-container,
 .error-container {
   display: flex;
