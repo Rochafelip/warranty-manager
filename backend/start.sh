@@ -1,7 +1,16 @@
 #!/bin/bash
 
-# Executa as migrations e seed com reset
-bundle exec rails db:drop db:create db:migrate db:seed
+# Fail fast
+set -e
 
-# Inicia o servidor normalmente
+echo "📦 Instalando dependências..."
+bundle install
+
+echo "🧬 Migrando banco de dados..."
+bundle exec rails db:migrate
+
+echo "🌱 Rodando seeds..."
+bundle exec rails db:seed
+
+echo "🚀 Iniciando o servidor Puma..."
 bundle exec puma -C config/puma.rb
