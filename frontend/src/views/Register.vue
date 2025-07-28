@@ -29,17 +29,15 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        // Envia os dados para criar o usuário
-        const response = await axios.post('http://localhost:4000/auth', {
+        const response = await axios.post('/auth', {
           name: this.name,
           email: this.email,
           password: this.password,
           password_confirmation: this.passwordConfirmation,
         });
 
-        // Sucesso no registro
         alert('Conta criada com sucesso! Faça login para continuar.');
-        this.$router.push('/login'); // Redireciona para o login
+        this.$router.push('/login'); 
       } catch (error) {
         if (error.response && error.response.data) {
           this.errorMessage = error.response.data.errors.full_messages.join(', ') || 'Erro ao criar conta.';
