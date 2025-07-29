@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/axios.js';
 
 export default {
   data() {
@@ -29,7 +29,7 @@ export default {
   methods: {
     async handleRegister() {
       try {
-        const response = await axios.post('/auth', {
+        const response = await api.post('/auth', {
           name: this.name,
           email: this.email,
           password: this.password,

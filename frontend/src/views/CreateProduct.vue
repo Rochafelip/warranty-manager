@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '../services/axios.js';
 
 export default {
   data() {
@@ -118,7 +118,7 @@ export default {
     async fetchStores() {
       try {
         const authorizationHeader = sessionStorage.getItem("Authorization");
-        const response = await axios.get("http://localhost:4000/stores", {
+        const response = await api.get("/stores", {
           headers: { Authorization: authorizationHeader },
         });
         this.stores = response.data;
@@ -130,19 +130,16 @@ export default {
       try {
         this.isCreatingStore = true; // Bloqueia ações enquanto a loja está sendo criada
         const authorizationHeader = sessionStorage.getItem("Authorization");
-        const response = await axios.post(
-          "http://localhost:4000/stores",
+        const response = await api.post("/stores",
           { store: this.newStore },
           {
             headers: { Authorization: authorizationHeader },
           }
         );
 
-        // Adiciona a nova loja à lista e seleciona automaticamente
         this.stores.push(response.data);
         this.selectedStoreId = response.data.id;
 
-        // Reseta os campos do formulário de nova loja
         this.newStore = { name: "", contact: "", address: "" };
         alert("Loja criada com sucesso!");
       } catch (error) {
@@ -160,8 +157,8 @@ export default {
           invoice_id: this.invoiceId,
         };
 
-        const response = await axios.post(
-          "http://localhost:4000/products",
+        const response = await api.post(
+          "/products",
           { product: productData },
           {
             headers: {

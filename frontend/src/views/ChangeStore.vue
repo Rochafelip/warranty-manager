@@ -40,7 +40,7 @@
   </template>
   
   <script>
-  import axios from 'axios';
+  import api from '../services/axios.js';
   
   export default {
     data() {
@@ -60,7 +60,7 @@
         this.isLoading = true;
         try {
           // Busca produtos associados à nota fiscal
-          const productResponse = await axios.get('http://localhost:4000/products', {
+          const productResponse = await api.get('/products', {
             q: { invoice_id_eq: invoiceId }, // Ransack busca por "igual"
   
             headers: { Authorization: sessionStorage.getItem('Authorization') },
@@ -68,7 +68,7 @@
           this.products = productResponse.data;
   
           // Busca todas as lojas
-          const storeResponse = await axios.get('http://localhost:4000/stores', {
+          const storeResponse = await api.get('/stores', {
             headers: { Authorization: sessionStorage.getItem('Authorization') },
           });
           this.stores = storeResponse.data;
@@ -87,8 +87,7 @@
       async updateStore() {
         try {
           for (const product of this.products) {
-            await axios.put(
-              `http://localhost:4000/products/${product.id}`,
+            await api.put(`/products/${product.id}`,
               { store_id: product.store_id },
               {
                 headers: {

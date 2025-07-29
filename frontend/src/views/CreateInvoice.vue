@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '../services/axios.js';
 
 export default {
   data() {
@@ -81,23 +81,22 @@ export default {
           return;
         }
 
-        // Cria o objeto FormData
         const formData = new FormData();
         formData.append("invoice[invoice_number]", this.invoice.invoice_number);
         formData.append("invoice[issue_date]", this.invoice.issue_date);
         formData.append("invoice[purchase_date]", this.invoice.purchase_date);
         formData.append("invoice[pdf]", this.invoice.pdf_url);
 
-        const response = await axios.post("http://localhost:4000/invoices", formData, {
+        const response = await api.post("/invoices", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: authorizationHeader,
           },
         });
 
-        const invoiceId = response.data.id; // Captura o ID da Invoice
+        const invoiceId = response.data.id; 
 
-        this.$router.push(`/add-products/${invoiceId}`); // Redireciona para a tela de adicionar produtos
+        this.$router.push(`/add-products/${invoiceId}`); 
       } catch (error) {
         console.error("Erro ao criar a nota fiscal:", error);
         alert("Erro ao criar a nota fiscal.");

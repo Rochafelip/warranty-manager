@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import api from '../services/axios.js';
 
 export default {
     data() {
@@ -85,7 +85,7 @@ export default {
                 console.log('Carregando a nota fiscal...');
 
                 // Carrega a nota fiscal
-                const invoiceResponse = await axios.get(`http://localhost:4000/invoices/${invoiceId}`, {
+                const invoiceResponse = await api.get(`/invoices/${invoiceId}`, {
                     headers: {
                         Authorization: sessionStorage.getItem('Authorization'),
                     },
@@ -93,8 +93,8 @@ export default {
                 this.invoice = invoiceResponse.data;
 
                 // Carrega os produtos associados à nota fiscal
-                const productResponse = await axios.get(`http://localhost:4000/products`, {
-                    params: { q: { invoice_id_eq: invoiceId } },  // Aqui é usado o ransack
+                const productResponse = await api.get(`/products`, {
+                    params: { q: { invoice_id_eq: invoiceId } },
                     headers: {
                         Authorization: sessionStorage.getItem('Authorization'),
                     },
@@ -113,7 +113,7 @@ export default {
         },
 
         fetchProductsByInvoice(invoiceId) {
-            this.$axios.get(`/products`, {
+            this.$api.get(`/products`, {
                 params: { q: { invoice_id_eq: invoiceId } },  // Aqui é usado o ransack
                 headers: {
                     Authorization: sessionStorage.getItem('Authorization'),
@@ -127,11 +127,10 @@ export default {
                 });
         },
 
-        // Atualiza a nota fiscal
         async updateInvoice() {
             const invoiceId = this.$route.params.id;
             try {
-                await axios.put(`http://localhost:4000/invoices/${invoiceId}`, this.invoice, {
+                await api.put(`/invoices/${invoiceId}`, this.invoice, {
                     headers: {
                         Authorization: sessionStorage.getItem('Authorization'),
                         'Content-Type': 'application/json',
@@ -145,7 +144,6 @@ export default {
             }
         },
 
-        // Função de edição de produto (a lógica pode ser expandida conforme necessidade)
         editProduct(productId) {
             this.$router.push(`/edit-product/${productId}`);
         },

@@ -37,7 +37,7 @@
   </template>
   
   <script>
-  import axios from 'axios';
+  import api from '../services/axios.js';
   
   export default {
     data() {
@@ -57,7 +57,7 @@
       const productId = this.$route.params.productId;
       this.isLoading = true;
       try {
-        const response = await axios.get(`http://localhost:4000/products/${productId}`, {
+        const response = await api.get(`/products/${productId}`, {
           headers: {
             Authorization: sessionStorage.getItem('Authorization'),
           },
@@ -74,7 +74,7 @@
       async updateProduct() {
         const productId = this.$route.params.productId;
         try {
-          await axios.put(`http://localhost:4000/products/${productId}`, this.product, {
+          await api.put(`/products/${productId}`, this.product, {
             headers: {
               Authorization: sessionStorage.getItem('Authorization'),
               'Content-Type': 'application/json',
