@@ -8,7 +8,8 @@ class InvoiceSerializer < ApplicationSerializer
       invoice_number: invoice.invoice_number,
       purchase_date: invoice.purchase_date,
       issue_date: invoice.issue_date,
-      pdf_url: pdf_url(invoice)
+      pdf_url: pdf_url(invoice),
+      products: invoice.products.map { |product| ProductSerializer.call(product) }
     }
   end
 
@@ -17,6 +18,9 @@ class InvoiceSerializer < ApplicationSerializer
   def self.pdf_url(invoice)
     return nil unless invoice.pdf.attached?
 
-    Rails.application.routes.url_helpers.rails_blob_url(invoice.pdf, host: 'localhost:3000')
+    Rails.application.routes.url_helpers.rails_blob_url(
+      invoice.pdf,
+      host: 'localhost:3000'
+    )
   end
 end

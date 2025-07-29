@@ -5,12 +5,13 @@ class InvoicesController < ApplicationController
   def index
     authorize Invoice
     @q = policy_scope(Invoice).ransack(params[:q])
-    @invoices = @q.result
+    @invoices = @q.result.includes(products: :store)
 
     render json: @invoices.map { |invoice| InvoiceSerializer.call(invoice) }
   end
 
   def show
+    invoice = Invoice.includes(products: :store).find(params[:id])
     authorize invoice
     render json: InvoiceSerializer.call(invoice)
   end
