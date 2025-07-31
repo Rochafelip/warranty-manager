@@ -1,7 +1,7 @@
 class Invoice < ApplicationRecord
   has_one_attached :pdf
   belongs_to :user
-  has_many :product
+  has_many :products
 
   validates :invoice_number, presence: true,
                              format: { with: /\A[a-zA-Z0-9]+\z/, message: 'deve conter apenas letras e números!' }

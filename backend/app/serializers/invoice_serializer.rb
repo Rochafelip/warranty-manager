@@ -20,7 +20,7 @@ class InvoiceSerializer < ApplicationSerializer
 
     Rails.application.routes.url_helpers.rails_blob_url(
       invoice.pdf,
-      host: 'localhost:3000'
+      host: ENV.fetch("BACKEND_HOST", "http://localhost:3000")
     )
   end
 end
