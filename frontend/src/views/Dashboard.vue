@@ -122,7 +122,6 @@ export default {
         const invoices = invoiceRes.data;
         const products = productRes.data;
 
-        // Associa produtos + loja direto para cada invoice
         invoices.forEach(invoice => {
           invoice.products = products.filter(p => p.invoice_id === invoice.id);
         });
@@ -146,7 +145,7 @@ export default {
         });
 
         sessionStorage.clear();
-        this.$router.push('/login'); // redireciona para a página de login
+        this.$router.push('/login');
       } catch (error) {
         console.error('Erro ao fazer logout:', error);
         alert('Não foi possível fazer logout. Tente novamente.');

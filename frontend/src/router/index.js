@@ -50,7 +50,7 @@ const routes = [
     props: true,  
   },
   {
-    path: '/invoices/edit/:id',
+    path: '/invoices/:id/edit',
     name: 'UpdateInvoice',
     component: UpdateInvoice,
     props: true, // Permite passar o 'id' como prop

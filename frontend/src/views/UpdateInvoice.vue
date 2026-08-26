@@ -3,7 +3,6 @@
         <div class="form-container">
             <h1>Editar Nota Fiscal</h1>
 
-            <!-- Formulário de edição -->
             <form @submit.prevent="updateInvoice">
                 <div class="form-group">
                     <label for="invoiceNumber">Número da Nota Fiscal</label>
@@ -14,7 +13,7 @@
                     <label for="issueDate">Data de Emissão</label>
                     <input type="date" id="issueDate" v-model="invoice.issue_date" required />
                 </div>
-                <!-- Listagem de Produtos -->
+
                 <div class="products-list">
                     <h2>Produto</h2>
                     <ul>
@@ -36,16 +35,13 @@
                     </ul>
                 </div>
 
-                <!-- Botões de ação -->
                 <div class="form-actions">
                     <button type="submit" class="btn-submit">Salvar Alterações</button>
                     <button type="button" @click="cancelEdit" class="btn-cancel">Cancelar</button>
                 </div>
 
-                <!-- Carregando -->
                 <p v-if="isLoading" class="loading">Carregando dados da nota fiscal...</p>
 
-                <!-- Mensagem de sucesso ou erro -->
                 <p v-if="message" class="message" :class="message.type">{{ message.text }}</p>
             </form>
         </div>
@@ -63,10 +59,9 @@ export default {
                 issue_date: '',
             },
             userName: sessionStorage.getItem('user.name') || 'nome',
-            isLoading: false,  // Controle de loading
-            message: null,  // Mensagem de sucesso ou erro
-
-            products: [],  // Armazenará os produtos relacionados
+            isLoading: false,
+            message: null,
+            products: [],  
         };
     },
     computed: {
@@ -84,7 +79,6 @@ export default {
             try {
                 console.log('Carregando a nota fiscal...');
 
-                // Carrega a nota fiscal
                 const invoiceResponse = await api.get(`/invoices/${invoiceId}`, {
                     headers: {
                         Authorization: sessionStorage.getItem('Authorization'),
@@ -92,7 +86,6 @@ export default {
                 });
                 this.invoice = invoiceResponse.data;
 
-                // Carrega os produtos associados à nota fiscal
                 const productResponse = await api.get(`/products`, {
                     params: { q: { invoice_id_eq: invoiceId } },
                     headers: {
@@ -100,7 +93,6 @@ export default {
                     },
                 });
 
-                // Armazena os produtos associados à invoice
                 this.products = productResponse.data;
                 console.log('Produtos carregados:', this.products);
 
